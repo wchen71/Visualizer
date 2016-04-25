@@ -13,17 +13,17 @@ FFT fft; //band(loudness) and frequency
 float[] angle; // array of angles
 float[] y, x, by, bx, r, g, b, f; //array of sizes, color, fade
 
-int more; //more circles
+int more;
 float small, big, hue;
 
 void setup()
 {
   size(displayWidth, displayHeight, P3D); //full screen with 3d
   minim = new Minim(this); //new minim 
-  //song = minim.loadFile("dep.mp3"); //import a song
-  in = minim.getLineIn(Minim.STEREO, 2048, 192000.0); //mic input
+  song = minim.loadFile("dep.mp3"); //import a song
+  //in = minim.getLineIn(Minim.STEREO, 2048, 192000.0);
 
-  fft = new FFT(in.bufferSize(), in.sampleRate()); //fft takes the songs buffersize and samplerate
+  fft = new FFT(song.bufferSize(), song.sampleRate()); //fft takes the songs buffersize and samplerate
   more = 2;
   hue = 1;
 
@@ -52,13 +52,13 @@ void setup()
   big = random(30, 50);
 
   frameRate(240);//makes frame rate
-  //song.play(); //plays song
+  song.play(); //plays song
 }
 
 void draw()
 {
   background(0); //background to black
-  fft.forward(in.mix); //forward the buffer
+  fft.forward(song.mix); //forward the buffer
 
   visuals();
 }
